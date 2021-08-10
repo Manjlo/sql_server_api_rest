@@ -20,7 +20,8 @@ export async function getConnection() {
 
 //Close Connection
 }
+
 export function closeConnetion() {
 	return sql.close();
 }
-
+export {sql};

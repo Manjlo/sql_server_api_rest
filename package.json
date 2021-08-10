@@ -10,11 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^3.16.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "mssql": "^5.1.5"
+    "mssql": "^5.1.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
