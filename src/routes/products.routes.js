@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {CreateNewProducts, getProductById, getProducts} from "../controlers/products.controllers"
+import {CreateNewProducts, deleteProduct, getProductById, getProducts, updateProductById} from "../controlers/products.controllers"
 
 const router = Router()
 
@@ -8,9 +8,9 @@ router.get('/products', getProducts)
 
 router.post('/products', CreateNewProducts)
 
-router.delete('/products',)
+router.delete('/products/:id',deleteProduct)
 
-router.put('/products',)
+router.put('/products/:id', updateProductById)
 
 router.get('/products/:id', getProductById)
 
