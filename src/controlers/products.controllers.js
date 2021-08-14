@@ -12,22 +12,29 @@ export const getProducts = async (req, res) => {
 }
 
 export const CreateNewProducts = async (req, res) => {
-
 	const { id, name, description } = req.body;
 	let quantity = req.body.quantity
 	if (quantity === undefined) quantity = 0;
 	if (name === null || description === null || id === null) {
 		return res.status(400).json({ msg: "bad request, please fill all fields" })
-		closeConnetion();
 	} else {
 		try {
 			const pool = await getConnection();
-			await pool
-				.request().input("id", sql.Int, id)
-				.input("name", sql.VarChar, name)
-				.input("description", sql.Text, description)
-				.input("quantity", sql.Int, quantity).query(queries.createNewProduct);
-			res.json(`New product created ${name} ${description} ${quantity}`);
+			const result = await pool.request().input("Id", id).query(queries.getProductsById);
+
+			
+			if (result.rowsAffected[0] != 0) {
+				res.status(400).send(`The product with id: ${id} already exists, if you want can update it`)
+				closeConnetion()
+			} else {
+				await pool
+					.request().input("id", sql.Int, id)
+					.input("name", sql.VarChar, name)
+					.input("description", sql.Text, description)
+					.input("quantity", sql.Int, quantity).query(queries.createNewProduct);
+				closeConnetion()
+				res.json(`New product created ${name} ${description} ${quantity}`);
+			}
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
@@ -57,9 +64,9 @@ export const deleteProduct = async (req, res) => {
 	try {
 		const pool = await getConnection()
 		const result = await pool
-		.request()
-		.input("Id", id)
-		.query(queries.getProductsById);
+			.request()
+			.input("Id", id)
+			.query(queries.getProductsById);
 		if (result.rowsAffected[0] === 0) {
 			res.send(`Product with id: ${id} was not found`)
 		} else {
@@ -80,7 +87,7 @@ export const updateProductById = async (req, res) => {
 	const { name, description, quantity } = req.body;
 	const { id } = req.params
 
-	if (name === null || description === null || id === null || quantity === null) {
+	if (name == undefined || description == null || id == null || quantity == null) {
 		return res.status(400).json({ msg: "bad request, please fill all fields" })
 	}
 	try {
@@ -98,7 +105,7 @@ export const updateProductById = async (req, res) => {
 			.query(queries.updateProduct);
 		closeConnetion();
 		if (result.rowsAffected[0] === 0) {
-			return res.send(`The product: ${name} with id: ${id} was not found.`)
+			return res.send(`The product with id: ${id} was not found.`)
 
 		} else {
 			return res.send(`The product: ${name} by id:${id} was update`)
@@ -106,5 +113,4 @@ export const updateProductById = async (req, res) => {
 	} catch (error) {
 
 	}
-	getConnection().then(() => closeConnetion)
 }

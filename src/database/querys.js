@@ -1,4 +1,3 @@
-import { deleteProduct } from "../controlers/products.controllers";
 
 export const queries = {
 	getAllProducts: 'SELECT * FROM products',
