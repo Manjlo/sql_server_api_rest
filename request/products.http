@@ -7,7 +7,7 @@ POST   {{api}}
 Content-Type: application/json
 
 {
-	"id": 11,
+	"id": 16,
 	"name": "Manjlo",
 	"description": "Manolito el perro mas bonito",
 	"quantity": 90
@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{api}}/6
+GET {{api}}/16
 
 ###
 DELETE {{api}}/7

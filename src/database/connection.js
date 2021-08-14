@@ -1,11 +1,12 @@
 import sql, { pool } from 'mssql'
+import config from '../config';
 
 //Se
 const dbSettings = {
-	user: 'SA',
-	password: 'Manjlo#291602$',
-	server: 'localhost',
-	database: 'webstore',
+	user: config.db_user,
+	password: config.db_password,
+	server: config.db_server,
+	database: config.db_database,
 	options: {
 		encrypt: true,
 		trustServiceCertificate: true,
