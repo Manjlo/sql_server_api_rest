@@ -20,7 +20,7 @@ Project is created with:
 * Nodemon v2.0.12
 ## Setup
 ```
-cd ../filename
+cd ../sql_sever_api_rest
 npm install
 npm run start
 // dev
